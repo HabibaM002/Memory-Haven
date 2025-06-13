@@ -1,5 +1,5 @@
 # Memory-Haven
-A simple, user-friendly app designed to help people keep track of important memories, reminders, and contacts.
+A simple, user-friendly app designed to help people keep track of important memories, reminders, and contacts using HTML CSS and JavaScript
 
 ## Features
 
