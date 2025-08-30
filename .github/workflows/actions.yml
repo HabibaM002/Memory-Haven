@@ -1,0 +1,51 @@
+name: Testing
+on: [push, pull_request]
+
+jobs:
+  check-stuff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: make sure files exist
+        run: |
+          echo "checking if my files are here..."
+          if [ -f index.html ]; then
+            echo "good - found index.html"
+          else
+            echo "index.html is missing"
+          fi
+          
+          if ls *.css 1> /dev/null 2>&1; then
+            echo "css files are here too"
+          else
+            echo "no css files"
+          fi
+          
+          if ls *.js 1> /dev/null 2>&1; then
+            echo "javascript files found"
+          else
+            echo "no js files"
+          fi
+      
+      - name: check html
+        run: |
+          echo "making sure html is valid..."
+          if grep -q "<html" index.html; then
+            echo "html structure looks fine"
+          else
+            echo "something wrong with html"
+          fi
+      
+      - name: test js files
+        run: |
+          echo "checking javascript for errors..."
+          for file in *.js; do
+            if [ -f "$file" ]; then
+              if node --check "$file"; then
+                echo "$file looks good"
+              else
+                echo "$file has problems"
+              fi
+            fi
+          done
